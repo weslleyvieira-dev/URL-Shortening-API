@@ -55,6 +55,7 @@ header {
 
 p {
   font-family: "Poppins-Bold";
+  font-size: 0.938rem;
   color: var(--gray);
 }
 
@@ -75,6 +76,7 @@ button {
   border: none;
   border-radius: 1.75rem;
   font-family: "Poppins-Bold";
+  font-size: 0.938rem;
   color: white;
   background-color: var(--light-green);
 }
