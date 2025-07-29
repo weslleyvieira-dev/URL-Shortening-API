@@ -35,13 +35,15 @@ main {
   display: flex;
   align-items: center;
   margin: 4.875rem 0 4.875rem 10.375rem;
+  height: 30.125rem;
 }
 
 .hero-info {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  width: 35.25rem;
+  height: 21.938rem;
+  width: 36.25rem;
   position: relative;
 }
 
@@ -78,13 +80,15 @@ main {
 }
 
 .hero-img {
-  position: relative;
-  right: -7.688rem;
+  z-index: -1;
+  position: absolute;
+  right: -6.44rem;
 }
 
-@media (max-width: 1023px) {
+@media (max-width: 1024px) {
   .hero {
     flex-direction: column-reverse;
+    height: 41.438rem;
     margin: 1.5rem;
     gap: 2.25rem;
   }
@@ -92,12 +96,14 @@ main {
   .hero-img {
     width: 511px;
     height: 337px;
-    left: 0;
+    position: relative;
+    right: 0;
     transform: translateX(5.75rem);
   }
 
   .hero-info {
     align-items: center;
+    height: 18.063rem;
     width: 100%;
   }
 
