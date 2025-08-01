@@ -81,7 +81,7 @@ main {
 
 .hero-img {
   z-index: -1;
-  position: absolute;
+  position: fixed;
   right: -6.44rem;
 }
 
