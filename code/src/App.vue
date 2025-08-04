@@ -79,10 +79,6 @@ import Header from "./components/Header.vue";
 </template>
 
 <style scoped>
-main {
-  overflow-x: hidden;
-}
-
 .hero {
   display: flex;
   align-items: center;
@@ -133,6 +129,7 @@ main {
 }
 
 .hero-img {
+  z-index: -1;
   position: absolute;
   right: -6.44rem;
 }
@@ -181,6 +178,7 @@ main {
   top: 50%;
   height: 0.5rem;
   width: 100%;
+  transform: translateY(-50%);
   background-color: var(--light-green);
 }
 
@@ -238,7 +236,7 @@ main {
   .hero {
     flex-direction: column-reverse;
     height: 41.438rem;
-    margin: 1.5rem;
+    margin: 1.5rem 1.5rem 5.5rem;
     gap: 2.25rem;
   }
 
@@ -286,6 +284,52 @@ main {
   .hero-info button:hover {
     cursor: pointer;
     background-color: var(--lighter-green);
+  }
+
+  .about {
+    padding: 10rem 1.5rem 5rem;
+    min-height: 77.625rem;
+    gap: 5.75rem;
+  }
+
+  .about-title {
+    width: 20.5rem;
+    gap: 1rem;
+  }
+
+  .about-title h1 {
+    font-size: 1.75rem;
+    letter-spacing: -0.7px;
+  }
+
+  .about-title p {
+    font-size: 1rem;
+    line-height: 1.75rem;
+    letter-spacing: 0.11px;
+  }
+
+  .about-info {
+    flex-direction: column;
+    gap: 5.75rem;
+  }
+
+  .about-info .line {
+    height: 100%;
+    width: 0.5rem;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .about-info-box {
+    align-items: center;
+    text-align: center;
+    width: 20.438rem;
+  }
+
+  .about-info-box:nth-child(2),
+  .about-info-box:nth-child(3) {
+    margin-top: 0;
   }
 }
 </style>
