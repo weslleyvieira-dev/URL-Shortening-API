@@ -21,6 +21,58 @@ import Header from "./components/Header.vue";
         alt="Ilustração"
       />
     </div>
+
+    <div class="about">
+      <div class="about-title">
+        <h1>Advanced Statistics</h1>
+        <p>
+          Track how your links are performing across the web with our advanced
+          statistics dashboard.
+        </p>
+      </div>
+      <div class="about-info">
+        <div class="about-info-box">
+          <div class="img">
+            <img
+              src="/assets/icons/icon-brand-recognition.svg"
+              alt="Brand Recognition"
+            />
+          </div>
+          <h2>Brand Recognition</h2>
+          <p>
+            Boost your brand recognition with each click. Generic links don't
+            mean a thing. Branded links help instil confidence in your content.
+          </p>
+        </div>
+        <div class="about-info-box">
+          <div class="img">
+            <img
+              src="/assets/icons/icon-detailed-records.svg"
+              alt="Detailed Records"
+            />
+          </div>
+          <h2>Detailed Records</h2>
+          <p>
+            Gain insights into who is clicking your links. Knowing when and
+            where people engage with your content helps inform better decisions.
+          </p>
+        </div>
+        <div class="about-info-box">
+          <div class="img">
+            <img
+              src="/assets/icons/icon-fully-customizable.svg"
+              alt="Fully Customizable"
+            />
+          </div>
+          <h2>Fully Customizable</h2>
+          <p>
+            Improve brand awareness and content discoverability through
+            customizable links, supercharging audience engagement.
+          </p>
+        </div>
+        <div class="line"></div>
+      </div>
+    </div>
   </main>
 
   <footer></footer>
@@ -36,6 +88,7 @@ main {
   align-items: center;
   margin: 4.875rem 0 4.875rem 10.375rem;
   height: 30.125rem;
+  position: relative;
 }
 
 .hero-info {
@@ -80,9 +133,105 @@ main {
 }
 
 .hero-img {
-  z-index: -1;
-  position: fixed;
+  position: absolute;
   right: -6.44rem;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12.75rem 10.25rem 7.5rem;
+  min-height: 36.5rem;
+  gap: 6.25rem;
+  background-color: var(--light-gray);
+}
+
+.about-title {
+  display: flex;
+  flex-direction: column;
+  width: 33.75rem;
+  gap: 1.125rem;
+  text-align: center;
+}
+
+.about-title h1 {
+  font-family: "Poppins-SemiBold";
+  font-size: 2.5rem;
+  line-height: 3rem;
+  letter-spacing: -1px;
+  color: var(--dark-gray);
+}
+
+.about-title p {
+  font-size: 1.125rem;
+  line-height: 2rem;
+  letter-spacing: 0.12px;
+  color: var(--gray);
+}
+
+.about-info {
+  display: flex;
+  gap: 1.875rem;
+  position: relative;
+}
+
+.about-info .line {
+  position: absolute;
+  top: 50%;
+  height: 0.5rem;
+  width: 100%;
+  background-color: var(--light-green);
+}
+
+.about-info-box {
+  display: flex;
+  flex-direction: column;
+  width: 21.875rem;
+  height: 16.688rem;
+  border-radius: 5px;
+  padding: 0 2rem;
+  box-sizing: border-box;
+  background-color: white;
+  z-index: 1;
+  position: relative;
+}
+
+.about-info-box:nth-child(2) {
+  margin-top: 2.75rem;
+}
+
+.about-info-box:nth-child(3) {
+  margin-top: 5.5rem;
+}
+
+.about-info-box .img {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 5.5rem;
+  height: 5.5rem;
+  border-radius: 50%;
+  transform: translateY(-50%);
+  background-color: var(--dark-purple);
+}
+
+.about-info-box img {
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.about-info-box h2 {
+  font-family: "Poppins-SemiBold";
+  font-size: 1.375rem;
+  color: var(--dark-gray);
+  margin-bottom: 0.75rem;
+}
+
+.about-info-box p {
+  font-size: 0.938rem;
+  line-height: 1.625rem;
+  color: var(--gray);
 }
 
 @media (max-width: 1024px) {

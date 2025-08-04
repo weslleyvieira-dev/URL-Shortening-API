@@ -36,12 +36,5 @@ html,
 body {
   height: 100dvh;
   width: 100dvw;
-  overflow: hidden;
-}
-
-@media (max-width: 1024px) {
-  html,
-  body {
-    overflow-y: visible;
-  }
+  overflow-x: hidden;
 }
