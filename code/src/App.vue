@@ -1,5 +1,6 @@
 <script setup>
 import Header from "./components/Header.vue";
+import Shorter from "./components/Shorter.vue";
 </script>
 
 <template>
@@ -21,6 +22,8 @@ import Header from "./components/Header.vue";
         alt="Ilustração"
       />
     </div>
+
+    <Shorter class="shorter" />
 
     <div class="about">
       <div class="about-title">
@@ -82,7 +85,7 @@ import Header from "./components/Header.vue";
 .hero {
   display: flex;
   align-items: center;
-  margin: 4.875rem 0 4.875rem 10.375rem;
+  margin: 4.875rem 0 0 10.375rem;
   height: 30.125rem;
   position: relative;
 }
@@ -132,6 +135,10 @@ import Header from "./components/Header.vue";
   z-index: -1;
   position: absolute;
   right: -6.44rem;
+}
+
+.shorter {
+  transform: translateY(5.25rem);
 }
 
 .about {
