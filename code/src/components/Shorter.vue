@@ -3,7 +3,7 @@ import { ref } from "vue";
 
 const url = ref("");
 const isSubmitted = ref(false);
-const error = ref(false);
+const error = ref("");
 const shortLink = ref("");
 
 async function shortUrl(inputUrl) {
@@ -47,7 +47,7 @@ async function shortUrl(inputUrl) {
 </script>
 
 <template>
-  <div class="shorter">
+  <div class="shorter" :class="{ error: error }">
     <div class="url-container">
       <input
         id="url"
@@ -81,9 +81,7 @@ async function shortUrl(inputUrl) {
 
 .url-container {
   display: flex;
-  flex-direction: column;
   position: relative;
-  gap: 0.5rem;
 }
 
 .url-input {
@@ -128,5 +126,45 @@ async function shortUrl(inputUrl) {
 
 .submit:hover {
   background-color: var(--lighter-green);
+}
+
+@media (max-width: 1024px) {
+  .shorter {
+    flex-direction: column;
+    gap: 1rem;
+    height: 10rem;
+    margin: 0 1.5rem;
+    background: var(--dark-purple)
+      url("/assets/backgrounds/bg-shorten-mobile.svg") repeat center;
+  }
+
+  .shorter.error {
+    height: 11.375rem;
+  }
+
+  .url-container {
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  .url-input {
+    width: 17.5rem;
+    height: 3rem;
+    padding: 0 1rem;
+    font-size: 1rem;
+    letter-spacing: 0.12px;
+  }
+
+  .url-error {
+    position: static;
+    line-height: 1.125rem;
+    letter-spacing: 0.11px;
+  }
+
+  .submit {
+    width: 17.5rem;
+    height: 3rem;
+    font-size: 1.125rem;
+  }
 }
 </style>
