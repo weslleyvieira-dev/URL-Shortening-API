@@ -23,7 +23,7 @@ import Shorter from "./components/Shorter.vue";
       />
     </div>
 
-    <Shorter class="shorter" />
+    <Shorter />
 
     <div class="about">
       <div class="about-title">
@@ -85,7 +85,7 @@ import Shorter from "./components/Shorter.vue";
 .hero {
   display: flex;
   align-items: center;
-  margin: 4.875rem 0 0 10.375rem;
+  margin: 4.875rem 0 9.5rem 10.375rem;
   height: 30.125rem;
   position: relative;
 }
@@ -137,15 +137,11 @@ import Shorter from "./components/Shorter.vue";
   right: -6.44rem;
 }
 
-.shorter {
-  transform: translateY(5.25rem);
-}
-
 .about {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 12.75rem 10.25rem 7.5rem;
+  padding: 2.25rem 10.25rem 7.5rem;
   min-height: 36.5rem;
   gap: 6.25rem;
   background-color: var(--light-gray);

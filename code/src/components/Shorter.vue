@@ -1,23 +1,37 @@
 <script setup>
 import { ref } from "vue";
 
-const url = ref("");
 const isSubmitted = ref(false);
+const isLoading = ref(false);
+const url = ref("");
+const copiedLink = ref("");
 const error = ref("");
-const shortLink = ref("");
+const duplicate = ref();
+const links = ref([]);
 
 async function shortUrl(inputUrl) {
+  if (isLoading.value) return;
+  isLoading.value = true;
+  isSubmitted.value = true;
+
   if (!inputUrl) {
     error.value = "Please add a link";
-    shortLink.value = "";
-    isSubmitted.value = true;
+    isLoading.value = false;
+    return;
+  }
+
+  duplicate.value = links.value.find(
+    (element) => element.longLink === inputUrl
+  );
+
+  if (duplicate.value) {
+    error.value = "This link is already shorted: ";
+    isLoading.value = false;
     return;
   }
 
   try {
-    isSubmitted.value = true;
     error.value = "";
-    shortLink.value = "";
 
     const response = await fetch(
       "https://corsproxy.io/?https://cleanuri.com/api/v1/shorten",
@@ -33,41 +47,93 @@ async function shortUrl(inputUrl) {
     );
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`Error status: ${response.status}`);
     }
 
     const data = await response.json();
-    console.log("URL encurtada:", data.result_url);
-    shortLink.value = data.result_url;
+    const newUrl = data.result_url;
+
+    links.value.unshift({
+      longLink: inputUrl,
+      shortLink: newUrl,
+    });
+    isLoading.value = false;
   } catch (e) {
     error.value = "Insert a valid URL";
     console.error(e);
   }
 }
+
+function copyLink(url) {
+  navigator.clipboard.writeText(url);
+  copiedLink.value = url;
+}
 </script>
 
 <template>
-  <div class="shorter" :class="{ error: error }">
-    <div class="url-container">
-      <input
-        id="url"
-        v-model.trim="url"
-        type="url"
-        placeholder="Shorten a link here..."
-        class="url-input"
-        :class="{ error: error }"
-        @keydown.enter="shortUrl(url)"
-      />
-      <span v-if="isSubmitted && error" class="url-error">{{ error }}</span>
+  <div class="shorter">
+    <div class="shorter-input" :class="{ error: error }">
+      <div class="url-container">
+        <input
+          id="url"
+          v-model.trim="url"
+          type="url"
+          placeholder="Shorten a link here..."
+          class="url-input"
+          :class="{ error: error }"
+          @keydown.enter="shortUrl(url)"
+        />
+        <span v-if="isSubmitted && error" class="url-error">
+          {{ error }}
+          <a
+            class="duplicated-link"
+            v-if="duplicate"
+            :href="duplicate.shortLink"
+            target="_blank"
+            >{{ duplicate.shortLink }}</a
+          >
+        </span>
+      </div>
+      <button
+        :disabled="isLoading"
+        v-on:click="shortUrl(url)"
+        type="submit"
+        class="submit"
+      >
+        Shorten It!
+      </button>
     </div>
-    <button v-on:click="shortUrl(url)" type="submit" class="submit">
-      Shorten It!
-    </button>
+    <div class="links-container">
+      <div class="item-container" v-for="item in links">
+        <a :href="item.longLink" target="_blank" class="long-link">{{
+          item.longLink
+        }}</a>
+        <div class="short-container">
+          <a :href="item.shortLink" target="_blank" class="short-link">{{
+            item.shortLink
+          }}</a>
+          <button
+            v-on:click="copyLink(item.shortLink)"
+            class="copy-btn"
+            :class="{ copied: copiedLink === item.shortLink }"
+          >
+            {{ copiedLink === item.shortLink ? "Copied!" : "Copy" }}
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <style scoped>
 .shorter {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  background-color: var(--light-gray);
+}
+
+.shorter-input {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -75,6 +141,7 @@ async function shortUrl(inputUrl) {
   height: 10.5rem;
   margin: 0 10.313rem;
   border-radius: 0.625rem;
+  transform: translateY(-5.25rem);
   background: var(--dark-purple)
     url("/assets/backgrounds/bg-shorten-desktop.svg") repeat-x center;
 }
@@ -100,17 +167,24 @@ async function shortUrl(inputUrl) {
   opacity: 0.5;
 }
 
-.error {
+input.error {
   border: 3px solid var(--red);
 }
 
 .url-error {
+  display: flex;
+  gap: 0.5rem;
   color: var(--red);
   font-style: italic;
   position: absolute;
   bottom: -1.5rem;
   line-height: 1.125rem;
   letter-spacing: 0.11px;
+}
+
+.duplicated-link {
+  color: var(--light-green);
+  text-decoration: none;
 }
 
 .submit {
@@ -128,8 +202,77 @@ async function shortUrl(inputUrl) {
   background-color: var(--lighter-green);
 }
 
+.submit:disabled {
+  cursor: not-allowed;
+  background-color: var(--red);
+}
+
+.links-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 0 10.313rem;
+  border-radius: 0.625rem;
+  transform: translateY(-5.25rem);
+}
+
+.item-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 4.5rem;
+  width: 100%;
+  border-radius: 5px;
+  padding: 0 1.5rem;
+  box-sizing: border-box;
+  background-color: white;
+}
+
+.short-container {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.long-link,
+.short-link {
+  font-size: 1.25rem;
+  letter-spacing: 0.15px;
+  text-decoration: none;
+}
+
+.long-link {
+  color: var(--dark-gray);
+}
+
+.short-link {
+  color: var(--light-green);
+}
+
+.copy-btn {
+  height: 2.5rem;
+  width: 6.375rem;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  background-color: var(--light-green);
+}
+
+.copy-btn:focus {
+  background-color: var(--dark-purple);
+}
+
+.copied {
+  background-color: var(--dark-purple);
+}
 @media (max-width: 1024px) {
   .shorter {
+    transform: translateY(5rem);
+  }
+
+  .shorter-input {
     flex-direction: column;
     gap: 1rem;
     height: 10rem;
@@ -138,7 +281,7 @@ async function shortUrl(inputUrl) {
       url("/assets/backgrounds/bg-shorten-mobile.svg") repeat center;
   }
 
-  .shorter.error {
+  .shorter-input.error {
     height: 11.375rem;
   }
 
