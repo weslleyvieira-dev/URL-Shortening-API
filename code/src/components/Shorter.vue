@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from "vue";
+import { ref, watch } from "vue";
 
 const isSubmitted = ref(false);
 const isLoading = ref(false);
@@ -16,7 +16,6 @@ async function shortUrl(inputUrl) {
 
   if (!inputUrl) {
     error.value = "Please add a link";
-    isLoading.value = false;
     return;
   }
 
@@ -26,7 +25,6 @@ async function shortUrl(inputUrl) {
 
   if (duplicate.value) {
     error.value = "This link is already shorted: ";
-    isLoading.value = false;
     return;
   }
 
@@ -57,7 +55,6 @@ async function shortUrl(inputUrl) {
       longLink: inputUrl,
       shortLink: newUrl,
     });
-    isLoading.value = false;
   } catch (e) {
     error.value = "Insert a valid URL";
     console.error(e);
@@ -68,6 +65,17 @@ function copyLink(url) {
   navigator.clipboard.writeText(url);
   copiedLink.value = url;
 }
+
+watch(url, (newValue) => {
+  const cleanUrl = newValue.replace(/\s/g, "");
+  if (cleanUrl !== newValue) {
+    url.value = cleanUrl;
+  }
+
+  error.value = "";
+  isSubmitted.value = false;
+  isLoading.value = false;
+});
 </script>
 
 <template>
@@ -257,6 +265,7 @@ input.error {
   border-radius: 5px;
   border: none;
   color: white;
+  cursor: pointer;
   background-color: var(--light-green);
 }
 
