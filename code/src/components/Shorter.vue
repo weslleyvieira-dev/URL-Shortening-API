@@ -55,6 +55,8 @@ async function shortUrl(inputUrl) {
       longLink: inputUrl,
       shortLink: newUrl,
     });
+
+    url.value = "";
   } catch (e) {
     error.value = "Insert a valid URL";
     console.error(e);
@@ -232,7 +234,7 @@ input.error {
   justify-content: space-between;
   height: 4.5rem;
   width: 100%;
-  border-radius: 5px;
+  border-radius: 0.313rem;
   padding: 0 1.5rem;
   box-sizing: border-box;
   background-color: white;
@@ -262,11 +264,13 @@ input.error {
 .copy-btn {
   height: 2.5rem;
   width: 6.375rem;
-  border-radius: 5px;
+  border-radius: 0.313rem;
   border: none;
+  font-family: "Poppins-SemiBold";
+  font-size: 0.938rem;
   color: white;
-  cursor: pointer;
   background-color: var(--light-green);
+  cursor: pointer;
 }
 
 .copy-btn:focus {
@@ -317,6 +321,45 @@ input.error {
     width: 17.5rem;
     height: 3rem;
     font-size: 1.125rem;
+  }
+
+  .links-container {
+    margin: 0 1.5rem;
+    transform: translateY(-5rem);
+  }
+
+  .item-container {
+    flex-direction: column;
+    align-items: start;
+    justify-content: center;
+    height: 9.75rem;
+    padding: 0;
+  }
+
+  .short-container {
+    flex-direction: column;
+    width: 100%;
+    align-items: start;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem 0;
+    margin-top: 0.75rem;
+    border-top: 1px solid hsl(257, 8%, 63%, 0.25);
+    box-sizing: border-box;
+  }
+
+  .long-link,
+  .short-link {
+    font-size: 1rem;
+    letter-spacing: 0.12px;
+  }
+
+  .long-link {
+    padding: 0 1rem;
+  }
+
+  .copy-btn {
+    height: 2.5rem;
+    width: 100%;
   }
 }
 </style>
