@@ -1,5 +1,5 @@
 <script setup>
-import { ref, watch } from "vue";
+import { ref, watch, onMounted } from "vue";
 
 const isSubmitted = ref(false);
 const isLoading = ref(false);
@@ -68,6 +68,22 @@ function copyLink(url) {
   copiedLink.value = url;
 }
 
+function saveToLocalStorage() {
+  localStorage.setItem("shortenedLinks", JSON.stringify(links.value));
+}
+
+function loadFromLocalStorage() {
+  const savedLinks = localStorage.getItem("shortenedLinks");
+
+  if (savedLinks) {
+    links.value = JSON.parse(savedLinks);
+  }
+}
+
+onMounted(() => {
+  loadFromLocalStorage();
+});
+
 watch(url, (newValue) => {
   const cleanUrl = newValue.replace(/\s/g, "");
   if (cleanUrl !== newValue) {
@@ -78,6 +94,14 @@ watch(url, (newValue) => {
   isSubmitted.value = false;
   isLoading.value = false;
 });
+
+watch(
+  links,
+  () => {
+    saveToLocalStorage();
+  },
+  { deep: true }
+);
 </script>
 
 <template>
