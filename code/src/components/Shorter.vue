@@ -230,6 +230,7 @@ input.error {
   font-size: 1.25rem;
   background-color: var(--light-green);
   color: white;
+  cursor: pointer;
 }
 
 .submit:hover {
@@ -297,13 +298,16 @@ input.error {
   cursor: pointer;
 }
 
-.copy-btn:focus {
+.copy-btn:hover {
+  background-color: var(--lighter-green);
+}
+
+.copied,
+.copied:hover {
+  cursor: default;
   background-color: var(--dark-purple);
 }
 
-.copied {
-  background-color: var(--dark-purple);
-}
 @media (max-width: 1024px) {
   .shorter {
     transform: translateY(5rem);
